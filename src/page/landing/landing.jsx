@@ -3,20 +3,28 @@ import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     overflow: "hidden",
-    padding: `0 ${theme.spacing.unit * 3}px`
+    padding: 0,
+    margin: 0,
+    textAlign: "center"
   },
   paper: {
-    // maxWidth: 400,
-    height: "25vh",
-    margin: `${theme.spacing.unit}px auto`,
-    padding: theme.spacing.unit * 2
+    maxWidth: "100%",
+    height: "40vh",
+    width: "100"
+  },
+  button: {
+    width: "100%",
+    height: "100%"
+  },
+  buttonBottom: {
+    padding: 10,
   }
 });
 const message = `Truncation should be conditionally applicable on this long line of text
@@ -29,29 +37,43 @@ export class Landing extends Component {
       <Fragment>
         <div className={classes.root}>
           <Paper className={classes.paper}>
-            <Grid container wrap="nowrap" spacing={16}>
-              <Grid item xs zeroMinWidth>
-                <Typography noWrap>{"resume"}</Typography>
+            <Button className={classes.button}>
+              <Grid container wrap="nowrap" spacing={0}>
+                <Grid item xs zeroMinWidth>
+                  <Typography variant="h1" noWrap>
+                    Resume Reading
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
+            </Button>
           </Paper>
           <Paper className={classes.paper}>
-            <Grid container wrap="nowrap" spacing={16}>
-              <Grid item xs>
-                <Typography noWrap>{"library"}</Typography>
+            <Button className={classes.button}>
+              <Grid container wrap="nowrap" spacing={0}>
+                <Grid item xs zeroMinWidth>
+                  <Typography variant="h1" noWrap>
+                    Select Books
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
+            </Button>
           </Paper>
           <Paper className={classes.paper}>
-            <Grid container wrap="nowrap" spacing={16}>
+            <Grid container wrap="nowrap" spacing={0}>
               <Grid item xs={4} md={4} lg={4}>
-                <Typography>{message}</Typography>
+                <Button className={classes.button}>
+                  <Typography variant="h4">Select</Typography>
+                </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
-                <Typography>{message}</Typography>
+                <Button className={classes.button}>
+                  <Typography variant="h4">Select</Typography>
+                </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
-                <Typography>{message}</Typography>
+                <Button className={classes.button}>
+                  <Typography variant="h4">Select</Typography>
+                </Button>
               </Grid>
             </Grid>
           </Paper>
