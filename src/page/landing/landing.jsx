@@ -24,7 +24,10 @@ const styles = theme => ({
     height: "100%"
   },
   buttonBottom: {
-    padding: 10,
+    width: "100%",
+    height: "100%",
+    paddingTop: "50px",
+    paddingBottom: "50px",
   }
 });
 const message = `Truncation should be conditionally applicable on this long line of text
@@ -61,17 +64,17 @@ export class Landing extends Component {
           <Paper className={classes.paper}>
             <Grid container wrap="nowrap" spacing={0}>
               <Grid item xs={4} md={4} lg={4}>
-                <Button className={classes.button}>
+                <Button className={classes.buttonBottom}>
                   <Typography variant="h4">Select</Typography>
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
-                <Button className={classes.button}>
+                <Button className={classes.buttonBottom}>
                   <Typography variant="h4">Select</Typography>
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
-                <Button className={classes.button}>
+                <Button className={classes.buttonBottom}>
                   <Typography variant="h4">Select</Typography>
                 </Button>
               </Grid>
