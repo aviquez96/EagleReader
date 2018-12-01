@@ -11,8 +11,9 @@ import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import style from "./style";
 import book from "../../books/grinch/book";
+import Grid from "@material-ui/core/Grid";
 
-const AutoPlaySwipeableViews = SwipeableViews;
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 export class Reader extends Component {
   state = {
@@ -98,6 +99,25 @@ export class Reader extends Component {
             </Button>
           }
         />
+        <Paper className={classes.paper}>
+          <Grid container wrap="nowrap" spacing={0}>
+            <Grid item xs={4} md={4} lg={4}>
+              <Button className={classes.button}>
+                <Typography variant="h4">Select</Typography>
+              </Button>
+            </Grid>
+            <Grid item xs={4} md={4} lg={4}>
+              <Button className={classes.button}>
+                <Typography variant="h4">Select</Typography>
+              </Button>
+            </Grid>
+            <Grid item xs={4} md={4} lg={4}>
+              <Button className={classes.button}>
+                <Typography variant="h4">Select</Typography>
+              </Button>
+            </Grid>
+          </Grid>
+        </Paper>
       </div>
     );
   }
