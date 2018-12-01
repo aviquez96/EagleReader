@@ -12,8 +12,10 @@ import { autoPlay } from "react-swipeable-views-utils";
 import style from "./style";
 import book from "../../books/grinch/book";
 import Grid from "@material-ui/core/Grid";
+// Router
+import { Link } from "react-router-dom";
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+const AutoPlaySwipeableViews = SwipeableViews;
 
 export class Reader extends Component {
   state = {
@@ -43,81 +45,84 @@ export class Reader extends Component {
 
     return (
       <div className={classes.root}>
-        <Paper square elevation={0} className={classes.header}>
-          <Typography>{book[activeStep].label}</Typography>
-        </Paper>
-        <AutoPlaySwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={activeStep}
-          onChangeIndex={this.handleStepChange}
-          enableMouseEvents
-        >
-          {book.map((step, index) => (
-            <div key={step.label}>
-              {Math.abs(activeStep - index) <= 2 ? (
-                <img
-                  className={classes.img}
-                  src={step.imgPath}
-                  alt={step.label}
-                />
-              ) : null}
-            </div>
-          ))}
-        </AutoPlaySwipeableViews>
-        <MobileStepper
-          steps={maxSteps}
-          variant="progress"
-          position="static"
-          activeStep={activeStep}
-          className={classes.mobileStepper}
-          nextButton={
-            <Button
-              size="small"
-              onClick={this.handleNext}
-              disabled={activeStep === maxSteps - 1}
-            >
-              Next
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowLeft />
-              ) : (
-                <KeyboardArrowRight />
-              )}
-            </Button>
-          }
-          backButton={
-            <Button
-              size="small"
-              onClick={this.handleBack}
-              disabled={activeStep === 0}
-            >
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowRight />
-              ) : (
-                <KeyboardArrowLeft />
-              )}
-              Back
-            </Button>
-          }
-        />
-        <Paper className={classes.paper}>
-          <Grid container wrap="nowrap" spacing={0}>
-            <Grid item xs={4} md={4} lg={4}>
-              <Button className={classes.button}>
-                <Typography variant="h4">Select</Typography>
+        <div className={classes.reader}>
+          <Paper square elevation={0} className={classes.header}>
+            <Typography>{book[activeStep].label}</Typography>
+          </Paper>
+          <AutoPlaySwipeableViews
+            className={classes.innerReadr}
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={activeStep}
+            onChangeIndex={this.handleStepChange}
+            enableMouseEvents
+          >
+            {book.map((step, index) => (
+              <div key={step.label}>
+                {Math.abs(activeStep - index) <= 2 ? (
+                  <img
+                    className={classes.img}
+                    src={step.imgPath}
+                    alt={step.label}
+                  />
+                ) : null}
+              </div>
+            ))}
+          </AutoPlaySwipeableViews>
+          <MobileStepper
+            steps={maxSteps}
+            variant="progress"
+            position="static"
+            activeStep={activeStep}
+            className={classes.mobileStepper}
+            nextButton={
+              <Button
+                size="small"
+                onClick={this.handleNext}
+                disabled={activeStep === maxSteps - 1}
+              >
+                Next
+                {theme.direction === "rtl" ? (
+                  <KeyboardArrowLeft />
+                ) : (
+                  <KeyboardArrowRight />
+                )}
               </Button>
-            </Grid>
-            <Grid item xs={4} md={4} lg={4}>
-              <Button className={classes.button}>
-                <Typography variant="h4">Select</Typography>
+            }
+            backButton={
+              <Button
+                size="small"
+                onClick={this.handleBack}
+                disabled={activeStep === 0}
+              >
+                {theme.direction === "rtl" ? (
+                  <KeyboardArrowRight />
+                ) : (
+                  <KeyboardArrowLeft />
+                )}
+                Back
               </Button>
-            </Grid>
-            <Grid item xs={4} md={4} lg={4}>
-              <Button className={classes.button}>
-                <Typography variant="h4">Select</Typography>
+            }
+          />
+        </div>
+        <Grid container wrap="nowrap" spacing={0}>
+          <Grid item xs={4} md={4} lg={4}>
+            <Link className={classes.noDeco} to="/">
+              <Button className={classes.buttonBottom}>
+                <Typography variant="h5">Home</Typography>
               </Button>
-            </Grid>
+            </Link>
           </Grid>
-        </Paper>
+          <Grid item xs={4} md={4} lg={4}>
+            <Button className={classes.buttonBottom}>
+              <Typography variant="h5">Select</Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={4} md={4} lg={4}>
+            <Button className={classes.buttonBottom}>
+              <Typography variant="h5">Select</Typography>
+            </Button>
+          </Grid>
+        </Grid>
       </div>
     );
   }

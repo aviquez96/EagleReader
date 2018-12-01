@@ -11,7 +11,7 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class instructionsDialog extends React.Component {
+class instructionsDialog extends Component {
   state = {
     open: this.props.openInstructions
   };
