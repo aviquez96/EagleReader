@@ -24,11 +24,10 @@ const styles = theme => ({
   button: {
     width: "100%",
     height: "100%",
-    border: "black solid 1px"
   },
   buttonBottom: {
     width: "100%",
-    height: "33vh",
+    height: "33vh"
   },
   noDeco: { textDecoration: "none", color: "white" }
 });
@@ -41,9 +40,9 @@ export class Landing extends Component {
     return (
       <Fragment>
         <div className={classes.root}>
-          <Paper className={classes.paper}>
-            <Button className={classes.button}>
-              <Link className={classes.noDeco} to="/reader">
+          <Link className={classes.noDeco} to="/reader">
+            <Paper className={classes.paper}>
+              <Button className={classes.button}>
                 <Grid container wrap="nowrap" spacing={0}>
                   <Grid item xs zeroMinWidth>
                     <Typography variant="h1" noWrap>
@@ -51,9 +50,9 @@ export class Landing extends Component {
                     </Typography>
                   </Grid>
                 </Grid>
-              </Link>
-            </Button>
-          </Paper>
+              </Button>
+            </Paper>
+          </Link>
           <Paper className={classes.paper}>
             <Button className={classes.button}>
               <Grid container wrap="nowrap" spacing={0}>
