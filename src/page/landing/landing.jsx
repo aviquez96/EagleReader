@@ -9,25 +9,34 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 
 const styles = theme => ({
+  body: {
+    margin: 0,
+  },
   root: {
     flexGrow: 1,
     overflow: "hidden",
     padding: 0,
     margin: 0,
-    textAlign: "center"
+    width: "100%",
   },
   paper: {
     maxWidth: "100%",
     height: "33vh",
-    width: "100"
+    width: "100",
   },
   button: {
     width: "100%",
-    height: "100%"
+    height: "100%",
+    textOverflow: "ellipsis"
   },
   buttonBottom: {
     width: "100%",
     height: "33vh"
+  },
+  soundButton: {
+    width: "100%",
+    height: "33vh",
+    background: "rgb(0, 255, 140)"
   },
   noDeco: { textDecoration: "none", color: "white" }
 });
@@ -35,6 +44,11 @@ const message = `Truncation should be conditionally applicable on this long line
  as this is a much longer line than what the container can support. `;
 
 export class Landing extends Component {
+  state = {
+    soundButtonStatus: true,
+    soundButtonText: "On", 
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -44,8 +58,8 @@ export class Landing extends Component {
             <Paper className={classes.paper}>
               <Button className={classes.button}>
                 <Grid container wrap="nowrap" spacing={0}>
-                  <Grid item xs zeroMinWidth>
-                    <Typography variant="h1" noWrap>
+                  <Grid item sm zeroMinWidth>
+                    <Typography variant="h1" noWrap align="center">
                       Resume Reading
                     </Typography>
                   </Grid>
@@ -57,8 +71,8 @@ export class Landing extends Component {
             <Paper className={classes.paper}>
               <Button className={classes.button}>
                 <Grid container wrap="nowrap" spacing={0}>
-                  <Grid item xs zeroMinWidth>
-                    <Typography variant="h1" noWrap>
+                  <Grid item sm zeroMinWidth>
+                    <Typography variant="h1" noWrap align="center">
                       Select Books
                     </Typography>
                   </Grid>
@@ -70,17 +84,18 @@ export class Landing extends Component {
             <Grid container wrap="nowrap" spacing={0}>
               <Grid item xs={4} md={4} lg={4}>
                 <Button className={classes.buttonBottom}>
-                  <Typography variant="h4">Action</Typography>
+                  <Typography variant="h4" align="center">Action</Typography>
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
                 <Button className={classes.buttonBottom}>
-                  <Typography variant="h4">Voice Commands</Typography>
+                  <Typography variant="h4" align="center">Voice Commands</Typography>
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
-                <Button className={classes.buttonBottom}>
-                  <Typography variant="h4">Sound: 'On'</Typography>
+                <Button className={classes.soundButton}>
+                  
+                  <Typography variant="h4" align="center">Sound: {this.state.soundButtonText}</Typography>
                 </Button>
               </Grid>
             </Grid>
