@@ -18,7 +18,7 @@ const styles = theme => ({
   },
   paper: {
     maxWidth: "100%",
-    height: "40vh",
+    height: "33vh",
     width: "100"
   },
   button: {
@@ -26,7 +26,8 @@ const styles = theme => ({
     height: "100%"
   },
   buttonBottom: {
-    padding: 10
+    width: "100%",
+    height: "33vh"
   },
   noDeco: { textDecoration: "none", color: "white" }
 });
@@ -39,9 +40,9 @@ export class Landing extends Component {
     return (
       <Fragment>
         <div className={classes.root}>
-          <Paper className={classes.paper}>
-            <Button className={classes.button}>
-              <Link className={classes.noDeco} to="/reader">
+          <Link className={classes.noDeco} to="/reader">
+            <Paper className={classes.paper}>
+              <Button className={classes.button}>
                 <Grid container wrap="nowrap" spacing={0}>
                   <Grid item xs zeroMinWidth>
                     <Typography variant="h1" noWrap>
@@ -49,35 +50,37 @@ export class Landing extends Component {
                     </Typography>
                   </Grid>
                 </Grid>
-              </Link>
-            </Button>
-          </Paper>
-          <Paper className={classes.paper}>
-            <Button className={classes.button}>
-              <Grid container wrap="nowrap" spacing={0}>
-                <Grid item xs zeroMinWidth>
-                  <Typography variant="h1" noWrap>
-                    Select Books
-                  </Typography>
+              </Button>
+            </Paper>
+          </Link>
+          <Link className={classes.noDeco} to="/bookSelection">
+            <Paper className={classes.paper}>
+              <Button className={classes.button}>
+                <Grid container wrap="nowrap" spacing={0}>
+                  <Grid item xs zeroMinWidth>
+                    <Typography variant="h1" noWrap>
+                      Select Books
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Button>
-          </Paper>
+              </Button>
+            </Paper>
+          </Link>
           <Paper className={classes.paper}>
             <Grid container wrap="nowrap" spacing={0}>
               <Grid item xs={4} md={4} lg={4}>
-                <Button className={classes.button}>
-                  <Typography variant="h4">Select</Typography>
+                <Button className={classes.buttonBottom}>
+                  <Typography variant="h4">Action</Typography>
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
-                <Button className={classes.button}>
-                  <Typography variant="h4">Select</Typography>
+                <Button className={classes.buttonBottom}>
+                  <Typography variant="h4">Voice Commands</Typography>
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
-                <Button className={classes.button}>
-                  <Typography variant="h4">Select</Typography>
+                <Button className={classes.buttonBottom}>
+                  <Typography variant="h4">Sound: 'On'</Typography>
                 </Button>
               </Grid>
             </Grid>
