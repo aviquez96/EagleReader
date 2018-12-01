@@ -23,7 +23,7 @@ const styles = theme => ({
   },
   button: {
     width: "100%",
-    height: "100%",
+    height: "100%"
   },
   buttonBottom: {
     width: "100%",
@@ -53,17 +53,19 @@ export class Landing extends Component {
               </Button>
             </Paper>
           </Link>
-          <Paper className={classes.paper}>
-            <Button className={classes.button}>
-              <Grid container wrap="nowrap" spacing={0}>
-                <Grid item xs zeroMinWidth>
-                  <Typography variant="h1" noWrap>
-                    Select Books
-                  </Typography>
+          <Link className={classes.noDeco} to="/bookSelection">
+            <Paper className={classes.paper}>
+              <Button className={classes.button}>
+                <Grid container wrap="nowrap" spacing={0}>
+                  <Grid item xs zeroMinWidth>
+                    <Typography variant="h1" noWrap>
+                      Select Books
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Button>
-          </Paper>
+              </Button>
+            </Paper>
+          </Link>
           <Paper className={classes.paper}>
             <Grid container wrap="nowrap" spacing={0}>
               <Grid item xs={4} md={4} lg={4}>
