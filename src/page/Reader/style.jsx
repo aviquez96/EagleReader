@@ -26,7 +26,8 @@ const styles = theme => ({
     maxHeight: "calc(70vh - 104px)",
     display: "block",
     overflow: "hidden",
-    width: "auto"
+    width: "100hw",
+    height: "auto"
   },
   buttonBottom: {
     height: "30vh",
@@ -35,7 +36,7 @@ const styles = theme => ({
   noDeco: { textDecoration: "none", color: "white" },
   icon: {
     margin: theme.spacing.unit,
-    fontSize: 100
+    fontSize: 80
   }
 });
 
