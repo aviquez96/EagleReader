@@ -30,9 +30,13 @@ const styles = theme => ({
   },
   buttonBottom: {
     height: "30vh",
-    width: 100
+    width: "100%"
   },
-  noDeco: { textDecoration: "none", color: "white" }
+  noDeco: { textDecoration: "none", color: "white" },
+  icon: {
+    margin: theme.spacing.unit,
+    fontSize: 100
+  }
 });
 
 export default styles;

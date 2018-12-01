@@ -12,6 +12,11 @@ import { autoPlay } from "react-swipeable-views-utils";
 import style from "./style";
 import book from "../../books/grinch/book";
 import Grid from "@material-ui/core/Grid";
+// icons
+import Home from "@material-ui/icons/Home";
+import SettingsVoice from "@material-ui/icons/SettingsVoice";
+import VolumeUp from "@material-ui/icons/VolumeUp";
+import VolumeOff from "@material-ui/icons/VolumeOff";
 // Router
 import { Link } from "react-router-dom";
 
@@ -19,7 +24,8 @@ const AutoPlaySwipeableViews = SwipeableViews;
 
 export class Reader extends Component {
   state = {
-    activeStep: 0
+    activeStep: 0,
+    mute: false
   };
 
   handleNext = () => {
@@ -36,6 +42,12 @@ export class Reader extends Component {
 
   handleStepChange = activeStep => {
     this.setState({ activeStep });
+  };
+
+  toggleMute = () => {
+    this.setState((prevState, props) => ({
+      mute: prevState.mute ? false : true
+    }));
   };
 
   render() {
@@ -108,18 +120,22 @@ export class Reader extends Component {
           <Grid item xs={4} md={4} lg={4}>
             <Link className={classes.noDeco} to="/">
               <Button className={classes.buttonBottom}>
-                <Typography variant="h5">Home</Typography>
+                <Home className={classes.icon} />
               </Button>
             </Link>
           </Grid>
           <Grid item xs={4} md={4} lg={4}>
             <Button className={classes.buttonBottom}>
-              <Typography variant="h5">Select</Typography>
+              <SettingsVoice className={classes.icon} />
             </Button>
           </Grid>
           <Grid item xs={4} md={4} lg={4}>
-            <Button className={classes.buttonBottom}>
-              <Typography variant="h5">Select</Typography>
+            <Button className={classes.buttonBottom} onClick={this.toggleMute}>
+              {this.state.mute ? (
+                <VolumeOff className={classes.icon} />
+              ) : (
+                <VolumeUp className={classes.icon} />
+              )}
             </Button>
           </Grid>
         </Grid>
