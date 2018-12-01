@@ -5,6 +5,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+// Router
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   root: {
@@ -24,8 +26,9 @@ const styles = theme => ({
     height: "100%"
   },
   buttonBottom: {
-    padding: 10,
-  }
+    padding: 10
+  },
+  noDeco: { textDecoration: "none", color: "white" }
 });
 const message = `Truncation should be conditionally applicable on this long line of text
  as this is a much longer line than what the container can support. `;
@@ -38,13 +41,15 @@ export class Landing extends Component {
         <div className={classes.root}>
           <Paper className={classes.paper}>
             <Button className={classes.button}>
-              <Grid container wrap="nowrap" spacing={0}>
-                <Grid item xs zeroMinWidth>
-                  <Typography variant="h1" noWrap>
-                    Resume Reading
-                  </Typography>
+              <Link className={classes.noDeco} to="/reader">
+                <Grid container wrap="nowrap" spacing={0}>
+                  <Grid item xs zeroMinWidth>
+                    <Typography variant="h1" noWrap>
+                      Resume Reading
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </Link>
             </Button>
           </Paper>
           <Paper className={classes.paper}>
