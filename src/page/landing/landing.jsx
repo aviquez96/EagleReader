@@ -5,6 +5,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+// Router
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   root: {
@@ -16,19 +18,19 @@ const styles = theme => ({
   },
   paper: {
     maxWidth: "100%",
-    height: "40vh",
+    height: "33vh",
     width: "100"
   },
   button: {
     width: "100%",
-    height: "100%"
+    height: "100%",
+    border: "black solid 1px"
   },
   buttonBottom: {
     width: "100%",
-    height: "100%",
-    paddingTop: "50px",
-    paddingBottom: "50px",
-  }
+    height: "33vh",
+  },
+  noDeco: { textDecoration: "none", color: "white" }
 });
 const message = `Truncation should be conditionally applicable on this long line of text
  as this is a much longer line than what the container can support. `;
@@ -41,13 +43,15 @@ export class Landing extends Component {
         <div className={classes.root}>
           <Paper className={classes.paper}>
             <Button className={classes.button}>
-              <Grid container wrap="nowrap" spacing={0}>
-                <Grid item xs zeroMinWidth>
-                  <Typography variant="h1" noWrap>
-                    Resume Reading
-                  </Typography>
+              <Link className={classes.noDeco} to="/reader">
+                <Grid container wrap="nowrap" spacing={0}>
+                  <Grid item xs zeroMinWidth>
+                    <Typography variant="h1" noWrap>
+                      Resume Reading
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </Link>
             </Button>
           </Paper>
           <Paper className={classes.paper}>
@@ -65,17 +69,17 @@ export class Landing extends Component {
             <Grid container wrap="nowrap" spacing={0}>
               <Grid item xs={4} md={4} lg={4}>
                 <Button className={classes.buttonBottom}>
-                  <Typography variant="h4">Select</Typography>
+                  <Typography variant="h4">Action</Typography>
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
                 <Button className={classes.buttonBottom}>
-                  <Typography variant="h4">Select</Typography>
+                  <Typography variant="h4">Voice Commands</Typography>
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
                 <Button className={classes.buttonBottom}>
-                  <Typography variant="h4">Select</Typography>
+                  <Typography variant="h4">Sound: 'On'</Typography>
                 </Button>
               </Grid>
             </Grid>
