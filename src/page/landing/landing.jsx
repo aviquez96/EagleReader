@@ -5,24 +5,25 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import InstructionsDialog from "./instructionsDialog";
 // Router
 import { Link } from "react-router-dom";
 
 const styles = theme => ({
   body: {
-    margin: 0,
+    margin: 0
   },
   root: {
     flexGrow: 1,
     overflow: "hidden",
     padding: 0,
     margin: 0,
-    width: "100%",
+    width: "100%"
   },
   paper: {
     maxWidth: "100%",
     height: "33vh",
-    width: "100",
+    width: "100"
   },
   button: {
     width: "100%",
@@ -46,8 +47,9 @@ const message = `Truncation should be conditionally applicable on this long line
 export class Landing extends Component {
   state = {
     soundButtonStatus: true,
-    soundButtonText: "On", 
-  }
+    soundButtonText: "On",
+    openInstructions: true
+  };
 
   render() {
     const { classes } = this.props;
@@ -84,23 +86,32 @@ export class Landing extends Component {
             <Grid container wrap="nowrap" spacing={0}>
               <Grid item xs={4} md={4} lg={4}>
                 <Button className={classes.buttonBottom}>
-                  <Typography variant="h4" align="center">Action</Typography>
+                  <Typography variant="h4" align="center">
+                    Action
+                  </Typography>
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
                 <Button className={classes.buttonBottom}>
-                  <Typography variant="h4" align="center">Voice Commands</Typography>
+                  <Typography variant="h4" align="center">
+                    Voice Commands
+                  </Typography>
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
                 <Button className={classes.soundButton}>
-                  
-                  <Typography variant="h4" align="center">Sound: {this.state.soundButtonText}</Typography>
+                  <Typography variant="h4" align="center">
+                    Sound: {this.state.soundButtonText}
+                  </Typography>
                 </Button>
               </Grid>
             </Grid>
           </Paper>
         </div>
+        <InstructionsDialog
+          open={this.state.openInstructions}
+          instructions={"Hello user, plese follow this instructions to start"}
+        />
       </Fragment>
     );
   }

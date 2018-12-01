@@ -24,12 +24,19 @@ class instructionsDialog extends Component {
     this.setState({ open: false });
   };
 
+  repeatMessage = () => {
+    window.responsiveVoice.speak(this.props.instructions, "US English Female");
+  };
+
+  componentDidMount = () => {
+    window.responsiveVoice.speak(this.props.instructions, "US English Female");
+  };
+
   render() {
     return (
       <div>
-        <Button onClick={this.handleClickOpen}>Slide in alert dialog</Button>
         <Dialog
-          open={this.state.open}
+          open={this.props.open}
           TransitionComponent={Transition}
           keepMounted
           onClose={this.handleClose}
@@ -37,20 +44,19 @@ class instructionsDialog extends Component {
           aria-describedby="alert-dialog-slide-description"
         >
           <DialogTitle id="alert-dialog-slide-title">
-            {"Use Google's location service?"}
+            {"Instructions"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              Let Google help apps determine location. This means sending
-              anonymous location data to Google, even when no apps are running.
+              {this.props.instructions}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Disagree
+            <Button onClick={this.repeatMessage} color="primary">
+              Repeat
             </Button>
             <Button onClick={this.handleClose} color="primary">
-              Agree
+              Ok
             </Button>
           </DialogActions>
         </Dialog>
