@@ -29,7 +29,11 @@ class instructionsDialog extends Component {
   };
 
   componentDidMount = () => {
-    window.responsiveVoice.speak(this.props.instructions, "US English Female");
+    if (this.props.openInstructions)
+      window.responsiveVoice.speak(
+        this.props.instructions,
+        "US English Female"
+      );
   };
 
   render() {
@@ -39,7 +43,7 @@ class instructionsDialog extends Component {
           open={this.props.open}
           TransitionComponent={Transition}
           keepMounted
-          onClose={this.handleClose}
+          onClose={this.props.handleClose}
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
@@ -55,7 +59,7 @@ class instructionsDialog extends Component {
             <Button onClick={this.repeatMessage} color="primary">
               Repeat
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.props.handleClose} color="primary">
               Ok
             </Button>
           </DialogActions>

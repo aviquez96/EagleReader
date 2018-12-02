@@ -51,6 +51,10 @@ export class Landing extends Component {
     openInstructions: true
   };
 
+  handleClose = () => {
+    this.setState({ openInstructions: false });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -111,6 +115,7 @@ export class Landing extends Component {
         <InstructionsDialog
           open={this.state.openInstructions}
           instructions={"Hello user, plese follow this instructions to start"}
+          handleClose={this.handleClose}
         />
       </Fragment>
     );
