@@ -17,14 +17,24 @@ import Home from "@material-ui/icons/Home";
 import SettingsVoice from "@material-ui/icons/SettingsVoice";
 import VolumeUp from "@material-ui/icons/VolumeUp";
 import VolumeOff from "@material-ui/icons/VolumeOff";
+import SpeechRecognition from "react-speech-recognition";
 // Router
-import { Link } from "react-router-dom";
+import { Link, Switch, Redirect } from "react-router-dom";
+
+const propTypes = {
+  // Props injected by SpeechRecognition
+  transcript: PropTypes.string,
+  resetTranscript: PropTypes.func,
+  browserSupportsSpeechRecognition: PropTypes.bool
+};
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 class bookSelection extends Component {
   state = {
     activeStep: 0,
-    playSpeech: true
+    playSpeech: true,
+    voice: false
   };
 
   handleNext = () => {
@@ -71,6 +81,8 @@ class bookSelection extends Component {
   };
 
   componentDidMount = () => {
+    this.props.resetTranscript();
+    this.props.abortListening();
     if (this.state.playSpeech) {
       window.responsiveVoice.speak(
         book[this.state.activeStep].label,
@@ -79,10 +91,38 @@ class bookSelection extends Component {
     }
   };
 
+  handleMic = () => {
+    if (this.props.listening) {
+      this.props.resetTranscript();
+      this.props.abortListening();
+      this.props.stopListening();
+      this.setState((prevState, props) => ({
+        voice: prevState.voice ? false : true
+      }));
+    } else {
+      this.props.resetTranscript();
+      this.props.startListening();
+      this.setState((prevState, props) => ({
+        voice: prevState.voice ? false : true
+      }));
+    }
+  };
+
   render() {
-    const { classes, theme } = this.props;
+    const {
+      classes,
+      theme,
+      transcript,
+      browserSupportsSpeechRecognition
+    } = this.props;
     const { activeStep } = this.state;
     const maxSteps = book.length;
+
+    let myRedirect = transcript.includes("home") ? (
+      <Redirect to="/" />
+    ) : (
+      <div></div>
+    );
 
     return (
       <div className={classes.root}>
@@ -157,11 +197,27 @@ class bookSelection extends Component {
               </Button>
             </Link>
           </Grid>
+          
           <Grid item xs={4} md={4} lg={4}>
-            <Button className={classes.settingsVoice}>
-              <SettingsVoice className={classes.icon} />
-            </Button>
-          </Grid>
+                {!this.state.voice ? (
+                  <Button
+                    className={classes.settingsVoiceOff}
+                    onClick={this.handleMic}
+                  >
+                    <SettingsVoice className={classes.icon} />
+                  </Button>
+                ) : (
+                  <Button
+                    className={classes.settingsVoiceOn}
+                    onClick={this.handleMic}
+                  >
+                    <SettingsVoice className={classes.icon} />
+                  </Button>
+                )}
+              </Grid>
+
+
+
           <Grid item xs={4} md={4} lg={4}>
             {this.state.mute ? (
               <Button
@@ -190,4 +246,6 @@ bookSelection.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(style, { withTheme: true })(bookSelection);
+export default SpeechRecognition({ autoStart: false })(
+  withStyles(style, { withTheme: true })(bookSelection)
+);
