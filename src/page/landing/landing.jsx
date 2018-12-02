@@ -69,9 +69,9 @@ export class Landing extends Component {
             <Paper className={classes.paper}>
               <Button className={classes.resumeReading}>
                 <Grid container wrap="nowrap" spacing={0}>
-                  <Grid item sm zeroMinWidth>
+                  <Grid item xs zeroMinWidth>
                     <Typography
-                      variant="h1"
+                      variant="h2"
                       noWrap
                       align="center"
                       style={{ padding: "10px 0px" }}
@@ -87,8 +87,8 @@ export class Landing extends Component {
             <Paper className={classes.paper}>
               <Button className={classes.selectBooks}>
                 <Grid container wrap="nowrap" spacing={0}>
-                  <Grid item sm zeroMinWidth>
-                    <Typography variant="h1" noWrap align="center">
+                  <Grid item xs zeroMinWidth>
+                    <Typography variant="h2" noWrap align="center">
                       Select Books
                     </Typography>
                   </Grid>
@@ -96,7 +96,7 @@ export class Landing extends Component {
               </Button>
             </Paper>
           </Link>
-          <Paper className={classes.paper}>
+          <Paper className={classes.commands}>
             <Grid container wrap="nowrap" spacing={0}>
               <Grid item xs={4} md={4} lg={4}>
                 <Button className={classes.touchApp}>
