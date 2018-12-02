@@ -6,19 +6,19 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import InstructionsDialog from "./instructionsDialog";
+// icons
+import VolumeUp from "@material-ui/icons/VolumeUp";
+import VolumeOff from "@material-ui/icons/VolumeOff";
+import SettingsVoice from "@material-ui/icons/SettingsVoice";
+import TouchApp from "@material-ui/icons/TouchApp";
 // Router
 import { Link } from "react-router-dom";
 
 const styles = theme => ({
-  body: {
-    margin: 0
-  },
   root: {
+    textAlign: "center",
     flexGrow: 1,
-    overflow: "hidden",
-    padding: 0,
-    margin: 0,
-    width: "100%"
+    height: "100vh"
   },
   paper: {
     maxWidth: "100%",
@@ -30,29 +30,69 @@ const styles = theme => ({
     height: "100%",
     textOverflow: "ellipsis"
   },
-  buttonBottom: {
-    width: "100%",
-    height: "33vh"
-  },
-  soundButton: {
+  soundButtonOff: {
     width: "100%",
     height: "33vh",
-    background: "rgb(0, 255, 140)"
+    background: "rgb(255, 40, 77)",
+    borderRadius: 0,
+    "&:hover": {
+      backgroundColor: "rgba(255, 40, 77, 0.6)"
+    }
   },
-  noDeco: { textDecoration: "none", color: "white" }
+  soundButtonOn: {
+    width: "100%",
+    height: "33vh",
+    background: "rgb(0, 255, 140)",
+    borderRadius: 0,
+    "&:hover": {
+      backgroundColor: "rgba(0, 255, 140, 0.6)"
+    }
+  },
+  touchApp: {
+    width: "100%",
+    height: "33vh",
+    background: "rgb(211,211,211)",
+    borderRadius: 0,
+    "&:hover": {
+      backgroundColor: "rgba(211,211,211,0.6)"
+    }
+  },
+  settingsVoice: {
+    width: "100%",
+    height: "33vh",
+    background: "rgb(140, 205, 255)",
+    borderRadius: 0,
+    "&:hover": {
+      backgroundColor: "rgba(140, 205, 255, 0.6)"
+    }
+  },
+  noDeco: { textDecoration: "none", color: "white" },
+  icon: {
+    margin: theme.spacing.unit,
+    fontSize: 80,
+    display: "block"
+  },
+  block: {
+    display: "block"
+  }
 });
-const message = `Truncation should be conditionally applicable on this long line of text
- as this is a much longer line than what the container can support. `;
 
 export class Landing extends Component {
   state = {
     soundButtonStatus: true,
     soundButtonText: "On",
-    openInstructions: true
+    openInstructions: true,
+    mute: false
   };
 
   handleClose = () => {
     this.setState({ openInstructions: false });
+  };
+
+  toggleMute = () => {
+    this.setState((prevState, props) => ({
+      mute: prevState.mute ? false : true
+    }));
   };
 
   render() {
@@ -89,25 +129,31 @@ export class Landing extends Component {
           <Paper className={classes.paper}>
             <Grid container wrap="nowrap" spacing={0}>
               <Grid item xs={4} md={4} lg={4}>
-                <Button className={classes.buttonBottom}>
-                  <Typography variant="h4" align="center">
-                    Action
-                  </Typography>
+                <Button className={classes.touchApp}>
+                  <TouchApp className={classes.icon} />
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
-                <Button className={classes.buttonBottom}>
-                  <Typography variant="h4" align="center">
-                    Voice Commands
-                  </Typography>
+                <Button className={classes.settingsVoice}>
+                  <SettingsVoice className={classes.icon} />
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
-                <Button className={classes.soundButton}>
-                  <Typography variant="h4" align="center">
-                    Sound: {this.state.soundButtonText}
-                  </Typography>
-                </Button>
+                {this.state.mute ? (
+                  <Button
+                    className={classes.soundButtonOff}
+                    onClick={this.toggleMute}
+                  >
+                    <VolumeOff className={classes.icon} />
+                  </Button>
+                ) : (
+                  <Button
+                    className={classes.soundButtonOn}
+                    onClick={this.toggleMute}
+                  >
+                    <VolumeUp className={classes.icon} />
+                  </Button>
+                )}
               </Grid>
             </Grid>
           </Paper>
