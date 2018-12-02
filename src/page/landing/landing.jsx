@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import styleFooter from "./style"
 import InstructionsDialog from "./instructionsDialog";
 // icons
 import VolumeUp from "@material-ui/icons/VolumeUp";
@@ -13,69 +14,6 @@ import SettingsVoice from "@material-ui/icons/SettingsVoice";
 import TouchApp from "@material-ui/icons/TouchApp";
 // Router
 import { Link } from "react-router-dom";
-
-const styles = theme => ({
-  root: {
-    textAlign: "center",
-    flexGrow: 1,
-    height: "100vh"
-  },
-  paper: {
-    maxWidth: "100%",
-    height: "33vh",
-    width: "100"
-  },
-  button: {
-    width: "100%",
-    height: "100%",
-    textOverflow: "ellipsis"
-  },
-  soundButtonOff: {
-    width: "100%",
-    height: "33vh",
-    background: "rgb(255, 40, 77)",
-    borderRadius: 0,
-    "&:hover": {
-      backgroundColor: "rgba(255, 40, 77, 0.6)"
-    }
-  },
-  soundButtonOn: {
-    width: "100%",
-    height: "33vh",
-    background: "rgb(0, 255, 140)",
-    borderRadius: 0,
-    "&:hover": {
-      backgroundColor: "rgba(0, 255, 140, 0.6)"
-    }
-  },
-  touchApp: {
-    width: "100%",
-    height: "33vh",
-    background: "rgb(211,211,211)",
-    borderRadius: 0,
-    "&:hover": {
-      backgroundColor: "rgba(211,211,211,0.6)"
-    }
-  },
-  settingsVoice: {
-    width: "100%",
-    height: "33vh",
-    background: "rgb(140, 205, 255)",
-    borderRadius: 0,
-    "&:hover": {
-      backgroundColor: "rgba(140, 205, 255, 0.6)"
-    }
-  },
-  noDeco: { textDecoration: "none", color: "white" },
-  icon: {
-    margin: theme.spacing.unit,
-    fontSize: 80,
-    display: "block"
-  },
-  block: {
-    display: "block"
-  }
-});
 
 export class Landing extends Component {
   state = {
@@ -102,10 +40,10 @@ export class Landing extends Component {
         <div className={classes.root}>
           <Link className={classes.noDeco} to="/reader">
             <Paper className={classes.paper}>
-              <Button className={classes.button}>
+              <Button className={classes.resumeReading}>
                 <Grid container wrap="nowrap" spacing={0}>
                   <Grid item sm zeroMinWidth>
-                    <Typography variant="h1" noWrap align="center">
+                    <Typography variant="h1" noWrap align="center" style={{padding: "10px 0px"}}>
                       Resume Reading
                     </Typography>
                   </Grid>
@@ -115,7 +53,7 @@ export class Landing extends Component {
           </Link>
           <Link className={classes.noDeco} to="/bookSelection">
             <Paper className={classes.paper}>
-              <Button className={classes.button}>
+              <Button className={classes.selectBooks}>
                 <Grid container wrap="nowrap" spacing={0}>
                   <Grid item sm zeroMinWidth>
                     <Typography variant="h1" noWrap align="center">
@@ -170,4 +108,5 @@ export class Landing extends Component {
 Landing.propTypes = {
   classes: PropTypes.object.isRequired
 };
-export default withStyles(styles)(Landing);
+
+export default withStyles(styleFooter, { withTheme: true })(Landing);
