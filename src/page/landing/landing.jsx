@@ -29,7 +29,8 @@ export class Landing extends Component {
     soundButtonStatus: true,
     soundButtonText: "On",
     openInstructions: true,
-    mute: false
+    mute: false,
+    voice: false
   };
 
   componentWillMount() {
@@ -51,11 +52,27 @@ export class Landing extends Component {
     }));
   };
 
+  handleMic = () => {
+    if (this.props.listening) {
+      this.props.resetTranscript();
+      this.props.abortListening();
+      this.props.stopListening();
+      this.setState((prevState, props) => ({
+        voice: prevState.voice ? false : true
+      }));
+    } else {
+      this.props.resetTranscript();
+      this.props.startListening();
+      this.setState((prevState, props) => ({
+        voice: prevState.voice ? false : true
+      }));
+    }
+  };
+
   render() {
     const {
       classes,
       transcript,
-      resetTranscript,
       browserSupportsSpeechRecognition
     } = this.props;
 
@@ -111,12 +128,21 @@ export class Landing extends Component {
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
-                <Button
-                  className={classes.settingsVoice}
-                  onClick={resetTranscript}
-                >
-                  <SettingsVoice className={classes.icon} />
-                </Button>
+                {!this.state.voice ? (
+                  <Button
+                    className={classes.settingsVoiceOff}
+                    onClick={this.handleMic}
+                  >
+                    <SettingsVoice className={classes.icon} />
+                  </Button>
+                ) : (
+                  <Button
+                    className={classes.settingsVoiceOn}
+                    onClick={this.handleMic}
+                  >
+                    <SettingsVoice className={classes.icon} />
+                  </Button>
+                )}
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
                 {this.state.mute ? (
@@ -138,7 +164,6 @@ export class Landing extends Component {
             </Grid>
           </Paper>
         </div>
-        {transcript}
         <InstructionsDialog
           open={this.state.openInstructions}
           instructions={"Hello user, plese follow this instructions to start"}
@@ -152,6 +177,6 @@ Landing.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default SpeechRecognition(
+export default SpeechRecognition({ autoStart: false })(
   withStyles(styleFooter, { withTheme: true })(Landing)
 );

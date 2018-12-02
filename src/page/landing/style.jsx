@@ -45,13 +45,22 @@ const styleFooter = theme => ({
       backgroundColor: "rgb(211,211,211)"
     }
   },
-  settingsVoice: {
+  settingsVoiceOff: {
     width: "100%",
     height: "30vh",
     background: "rgba(140, 205, 255, 0.6)",
     borderRadius: 0,
     "&:hover": {
       backgroundColor: "rgb(140, 205, 255)"
+    }
+  },
+  settingsVoiceOn: {
+    width: "100%",
+    height: "30vh",
+    background: "rgba(10, 245, 255, 0.6)",
+    borderRadius: 0,
+    "&:hover": {
+      backgroundColor: "rgb(10, 245, 255)"
     }
   },
   noDeco: { textDecoration: "none", color: "white" },
