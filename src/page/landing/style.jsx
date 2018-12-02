@@ -6,12 +6,12 @@ const styleFooter = theme => ({
   },
   paper: {
     maxWidth: "100%",
-    height: "33.33333vh",
+    height: "35vh",
     width: "100%"
   },
   commands: {
     maxWidth: "100%",
-    height: "33.33333vh",
+    height: "30vh",
     width: "100%"
   },
   button: {
@@ -20,7 +20,7 @@ const styleFooter = theme => ({
   },
   soundButtonOff: {
     width: "100%",
-    height: "33.333333vh",
+    height: "30vh",
     background: "rgba(255, 40, 77, 0.6)",
     borderRadius: 0,
     "&:hover": {
@@ -29,7 +29,7 @@ const styleFooter = theme => ({
   },
   soundButtonOn: {
     width: "100%",
-    height: "33.333333vh",
+    height: "30vh",
     background: "rgba(0, 255, 140, 0.6)",
     borderRadius: 0,
     "&:hover": {
@@ -38,7 +38,7 @@ const styleFooter = theme => ({
   },
   touchApp: {
     width: "100%",
-    height: "33.333333vh",
+    height: "30vh",
     background: "rgba(211,211,211,0.6)",
     borderRadius: 0,
     "&:hover": {
@@ -47,7 +47,7 @@ const styleFooter = theme => ({
   },
   settingsVoice: {
     width: "100%",
-    height: "33.333333vh",
+    height: "30vh",
     background: "rgba(140, 205, 255, 0.6)",
     borderRadius: 0,
     "&:hover": {
