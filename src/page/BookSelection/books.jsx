@@ -5,7 +5,7 @@ import img4 from "./imgs/4.jpg";
 
 const book = [
   {
-    label: "How The Grinch Stole Christmas 1",
+    label: "How The Grinch Stole Christmas",
     imgPath: img1
   },
   {
