@@ -85,8 +85,18 @@ export class Landing extends Component {
     mute: false
   };
 
+  componentWillMount(){
+    let shouldOpen= localStorage.getItem("openInstructions");
+    (shouldOpen == 'true') ?
+    this.setState({ openInstructions: true }):
+     this.setState({ openInstructions: false });
+
+  }
+
+
   handleClose = () => {
     this.setState({ openInstructions: false });
+    localStorage.setItem("openInstructions", false)
   };
 
   toggleMute = () => {
