@@ -20,7 +20,16 @@ import Pause from "@material-ui/icons/Pause";
 // axios
 import axios from "axios";
 // Router
-import { Link } from "react-router-dom";
+import { Link, Switch, Redirect } from "react-router-dom";
+// speech
+import SpeechRecognition from "react-speech-recognition";
+
+const propTypes = {
+  // Props injected by SpeechRecognition
+  transcript: PropTypes.string,
+  resetTranscript: PropTypes.func,
+  browserSupportsSpeechRecognition: PropTypes.bool
+};
 
 const AutoPlaySwipeableViews = SwipeableViews;
 
@@ -176,12 +185,25 @@ export class Reader extends Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const {
+      classes,
+      theme,
+      transcript,
+      resetTranscript,
+      browserSupportsSpeechRecognition
+    } = this.props;
     const { activeStep } = this.state;
     const maxSteps = book.length;
 
+    let myRedirect = transcript.includes("home") ? (
+      <Redirect to="/" />
+    ) : (
+      <Redirect to="/bookSelection" />
+    );
+
     return (
       <div className={classes.root}>
+        <Switch>{myRedirect}</Switch>
         <div className={classes.reader}>
           <Paper square elevation={0} className={classes.header}>
             <Typography>{book[activeStep].label}</Typography>
@@ -258,22 +280,22 @@ export class Reader extends Component {
             </Button>
           </Grid>
           <Grid item xs={4} md={4} lg={4}>
-                {!this.state.mute ? (
-                  <Button
-                    className={classes.soundButtonOn}
-                    onClick={this.toggleMute}
-                  >
-                    <Pause className={classes.icon} />
-                  </Button>
-                ) : (
-                  <Button
-                    className={classes.soundButtonOff}
-                    onClick={this.toggleMute}
-                  >
-                    <PlayArrow className={classes.icon} />
-                  </Button>
-                )}
-              </Grid>
+            {!this.state.mute ? (
+              <Button
+                className={classes.soundButtonOn}
+                onClick={this.toggleMute}
+              >
+                <Pause className={classes.icon} />
+              </Button>
+            ) : (
+              <Button
+                className={classes.soundButtonOff}
+                onClick={this.toggleMute}
+              >
+                <PlayArrow className={classes.icon} />
+              </Button>
+            )}
+          </Grid>
         </Grid>
       </div>
     );
@@ -285,4 +307,6 @@ Reader.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(style, { withTheme: true })(Reader);
+export default SpeechRecognition(
+  withStyles(style, { withTheme: true })(Reader)
+);

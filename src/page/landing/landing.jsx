@@ -13,7 +13,7 @@ import VolumeOff from "@material-ui/icons/VolumeOff";
 import SettingsVoice from "@material-ui/icons/SettingsVoice";
 import TouchApp from "@material-ui/icons/TouchApp";
 // Router
-import { Link } from "react-router-dom";
+import { Link, Switch, Redirect } from "react-router-dom";
 // speech
 import SpeechRecognition from "react-speech-recognition";
 
@@ -59,11 +59,18 @@ export class Landing extends Component {
       browserSupportsSpeechRecognition
     } = this.props;
 
+    let myRedirect = transcript.includes("resume") ? (
+      <Redirect to="/reader" />
+    ) : (
+      <Redirect to="/" />
+    );
+
     if (!browserSupportsSpeechRecognition) {
       return null;
     }
     return (
       <Fragment>
+        <Switch>{myRedirect}</Switch>
         <div className={classes.root}>
           <Link className={classes.noDeco} to="/reader">
             <Paper className={classes.paper}>
