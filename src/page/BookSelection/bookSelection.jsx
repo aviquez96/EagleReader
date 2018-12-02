@@ -24,7 +24,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 class bookSelection extends Component {
   state = {
     activeStep: 0,
-    playSpeech: true,
+    playSpeech: true
   };
 
   handleNext = () => {
@@ -40,39 +40,43 @@ class bookSelection extends Component {
   };
 
   handleStepChange = activeStep => {
-    if(window.responsiveVoice.isPlaying()){
-
-    }else{
-    this.setState({ activeStep });
-    if(this.state.playSpeech){
-      window.responsiveVoice.speak(book[activeStep].label, "US English Female");
+    if (window.responsiveVoice.isPlaying()) {
+    } else {
+      this.setState({ activeStep });
+      if (this.state.playSpeech) {
+        window.responsiveVoice.speak(
+          book[activeStep].label,
+          "US English Female"
+        );
+      }
     }
-  }
   };
 
   toggleMute = () => {
     this.setState((prevState, props) => ({
       mute: prevState.mute ? false : true
     }));
-    if(this.state.playSpeech) {
+    if (this.state.playSpeech) {
       console.log("should stop speech");
       this.setState({ playSpeech: false });
       window.responsiveVoice.cancel();
-    }
-    else {
+    } else {
       console.log("Should resume speech");
       this.setState({ playSpeech: true });
-        window.responsiveVoice.speak(book[this.state.activeStep].label, "US English Female");
+      window.responsiveVoice.speak(
+        book[this.state.activeStep].label,
+        "US English Female"
+      );
     }
-  }
+  };
 
   componentDidMount = () => {
-    if(this.state.playSpeech){
-    window.responsiveVoice.speak(
-      book[this.state.activeStep].label,
-      "US English Female"
-    );
-  }
+    if (this.state.playSpeech) {
+      window.responsiveVoice.speak(
+        book[this.state.activeStep].label,
+        "US English Female"
+      );
+    }
   };
 
   render() {
@@ -86,7 +90,7 @@ class bookSelection extends Component {
           <Typography>{book[activeStep].label}</Typography>
         </Paper>
         <AutoPlaySwipeableViews
-        className={classes.autoplay}
+          className={classes.autoplay}
           duration={2500}
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={activeStep}
@@ -143,34 +147,37 @@ class bookSelection extends Component {
           }
         />
         <Grid container wrap="nowrap" spacing={0}>
-        <Grid item xs={4} md={4} lg={4}>
-        <Link className={classes.noDeco} to="/">
-          <Button className={classes.touchApp}>
-            <Home className={classes.icon} />
-          </Button>
-          </Link>
-        </Grid>
+          <Grid item xs={4} md={4} lg={4}>
+            <Link className={classes.noDeco} to="/">
+              <Button
+                className={classes.touchApp}
+                onClick={() => window.responsiveVoice.pause()}
+              >
+                <Home className={classes.icon} />
+              </Button>
+            </Link>
+          </Grid>
           <Grid item xs={4} md={4} lg={4}>
             <Button className={classes.settingsVoice}>
               <SettingsVoice className={classes.icon} />
             </Button>
           </Grid>
           <Grid item xs={4} md={4} lg={4}>
-          {this.state.mute ? (
-            <Button
-              className={classes.soundButtonOff}
-              onClick={this.toggleMute}
-            >
-              <VolumeOff className={classes.icon} />
-            </Button>
-          ) : (
-            <Button
-              className={classes.soundButtonOn}
-              onClick={this.toggleMute}
-            >
-              <VolumeUp className={classes.icon} />
-            </Button>
-          )}
+            {this.state.mute ? (
+              <Button
+                className={classes.soundButtonOff}
+                onClick={this.toggleMute}
+              >
+                <VolumeOff className={classes.icon} />
+              </Button>
+            ) : (
+              <Button
+                className={classes.soundButtonOn}
+                onClick={this.toggleMute}
+              >
+                <VolumeUp className={classes.icon} />
+              </Button>
+            )}
           </Grid>
         </Grid>
       </div>
