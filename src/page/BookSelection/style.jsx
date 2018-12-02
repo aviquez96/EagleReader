@@ -38,7 +38,7 @@ const styles = theme => ({
   },
   soundButtonOff: {
     width: "100%",
-    height: "33.333333vh",
+    height: "30vh",
     background: "rgba(255, 40, 77, 0.6)",
     borderRadius: 0,
     "&:hover": {
@@ -56,7 +56,7 @@ const styles = theme => ({
   },
   touchApp: {
     width: "100%",
-    height: "30.333333vh",
+    height: "30vh",
     background: "rgba(211,211,211,0.6)",
     borderRadius: 0,
     "&:hover": {

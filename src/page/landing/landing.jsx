@@ -24,6 +24,7 @@ export class Landing extends Component {
   };
 
   componentWillMount(){
+    //localStorage.setItem("openInstructions", true)
     let shouldOpen= localStorage.getItem("openInstructions");
     (shouldOpen == 'true') ?
     this.setState({ openInstructions: true }):
