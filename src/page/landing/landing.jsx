@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import styleFooter from "./style"
+import styleFooter from "./style";
 import InstructionsDialog from "./instructionsDialog";
 // icons
 import VolumeUp from "@material-ui/icons/VolumeUp";
@@ -14,6 +14,15 @@ import SettingsVoice from "@material-ui/icons/SettingsVoice";
 import TouchApp from "@material-ui/icons/TouchApp";
 // Router
 import { Link } from "react-router-dom";
+// speech
+import SpeechRecognition from "react-speech-recognition";
+
+const propTypes = {
+  // Props injected by SpeechRecognition
+  transcript: PropTypes.string,
+  resetTranscript: PropTypes.func,
+  browserSupportsSpeechRecognition: PropTypes.bool
+};
 
 export class Landing extends Component {
   state = {
@@ -23,19 +32,17 @@ export class Landing extends Component {
     mute: false
   };
 
-  componentWillMount(){
+  componentWillMount() {
     //localStorage.setItem("openInstructions", true)
-    let shouldOpen= localStorage.getItem("openInstructions");
-    (shouldOpen == 'true') ?
-    this.setState({ openInstructions: true }):
-     this.setState({ openInstructions: false });
-
+    let shouldOpen = localStorage.getItem("openInstructions");
+    shouldOpen == "true"
+      ? this.setState({ openInstructions: true })
+      : this.setState({ openInstructions: false });
   }
-
 
   handleClose = () => {
     this.setState({ openInstructions: false });
-    localStorage.setItem("openInstructions", false)
+    localStorage.setItem("openInstructions", false);
   };
 
   toggleMute = () => {
@@ -45,7 +52,16 @@ export class Landing extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const {
+      classes,
+      transcript,
+      resetTranscript,
+      browserSupportsSpeechRecognition
+    } = this.props;
+
+    if (!browserSupportsSpeechRecognition) {
+      return null;
+    }
     return (
       <Fragment>
         <div className={classes.root}>
@@ -54,7 +70,12 @@ export class Landing extends Component {
               <Button className={classes.resumeReading}>
                 <Grid container wrap="nowrap" spacing={0}>
                   <Grid item sm zeroMinWidth>
-                    <Typography variant="h1" noWrap align="center" style={{padding: "10px 0px"}}>
+                    <Typography
+                      variant="h1"
+                      noWrap
+                      align="center"
+                      style={{ padding: "10px 0px" }}
+                    >
                       Resume Reading
                     </Typography>
                   </Grid>
@@ -83,7 +104,10 @@ export class Landing extends Component {
                 </Button>
               </Grid>
               <Grid item xs={4} md={4} lg={4}>
-                <Button className={classes.settingsVoice}>
+                <Button
+                  className={classes.settingsVoice}
+                  onClick={resetTranscript}
+                >
                   <SettingsVoice className={classes.icon} />
                 </Button>
               </Grid>
@@ -107,6 +131,7 @@ export class Landing extends Component {
             </Grid>
           </Paper>
         </div>
+        {transcript}
         <InstructionsDialog
           open={this.state.openInstructions}
           instructions={"Hello user, plese follow this instructions to start"}
@@ -120,4 +145,6 @@ Landing.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styleFooter, { withTheme: true })(Landing);
+export default SpeechRecognition(
+  withStyles(styleFooter, { withTheme: true })(Landing)
+);
