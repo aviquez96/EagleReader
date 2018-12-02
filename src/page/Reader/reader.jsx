@@ -15,8 +15,10 @@ import Grid from "@material-ui/core/Grid";
 // icons
 import Home from "@material-ui/icons/Home";
 import SettingsVoice from "@material-ui/icons/SettingsVoice";
-import VolumeUp from "@material-ui/icons/VolumeUp";
-import VolumeOff from "@material-ui/icons/VolumeOff";
+import PlayArrow from "@material-ui/icons/PlayArrow";
+import Pause from "@material-ui/icons/Pause";
+// axios
+import axios from "axios";
 // Router
 import { Link } from "react-router-dom";
 
@@ -25,29 +27,152 @@ const AutoPlaySwipeableViews = SwipeableViews;
 export class Reader extends Component {
   state = {
     activeStep: 0,
-    mute: false
+    mute: false,
+    speakingMessage: "",
+    text: ["", "", "", "", ""]
   };
 
   handleNext = () => {
     this.setState(prevState => ({
       activeStep: prevState.activeStep + 1
     }));
+
+    let prevText = this.state.text;
+    // console.log(book[this.state.activeStep].url);
+    let reqBody = {
+      requests: [
+        {
+          image: {
+            source: {
+              imageUri: book[this.state.activeStep + 1].url //image URL
+            }
+          },
+          features: [
+            {
+              type: "TEXT_DETECTION",
+              maxResults: 1
+            }
+          ],
+          imageContext: {
+            languageHints: ["en"]
+          }
+        }
+      ]
+    };
+    axios
+      .post(
+        "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyB_tGSHmcxwM7WJrBJXSNzZCJH3pvJwk_U",
+        reqBody
+      )
+      .then(response => {
+        try {
+          let temp = response.data.responses[0].fullTextAnnotation.text;
+          this.setState(
+            { speakingMessage: temp },
+            window.responsiveVoice.speak(temp, "US English Female", {
+              rate: 0.9
+            }),
+            (prevText[this.state.activeStep + 1] =
+              response.responses[0].description),
+            this.setState(
+              {
+                text: prevText
+              },
+              console.log(this.state.text)
+            )
+          );
+        } catch (e) {}
+      });
   };
 
   handleBack = () => {
     this.setState(prevState => ({
       activeStep: prevState.activeStep - 1
     }));
+    let text = this.state.text;
+    window.responsiveVoice.speak(
+      text[this.state.activeStep],
+      "US English Female",
+      {
+        rate: 0.9
+      }
+    );
   };
 
   handleStepChange = activeStep => {
-    this.setState({ activeStep });
+    // this.setState({ activeStep });
+    if (activeStep > this.state.activeStep) {
+      this.handleNext();
+    } else {
+      this.handleBack();
+    }
   };
 
   toggleMute = () => {
     this.setState((prevState, props) => ({
       mute: prevState.mute ? false : true
     }));
+    if (window.responsiveVoice.isPlaying()) {
+      window.responsiveVoice.pause();
+    } else {
+      window.responsiveVoice.resume();
+    }
+  };
+
+  componentDidMount = () => {
+    let prevText = this.state.text;
+    let body = {
+      requests: [
+        {
+          image: {
+            source: {
+              imageUri:
+                "https://raw.githubusercontent.com/aviquez96/EagleReader/master/src/books/grinch/imgs/1.jpg" //image URL
+            }
+          },
+          features: [
+            {
+              type: "TEXT_DETECTION",
+              maxResults: 1
+            }
+          ],
+          imageContext: {
+            languageHints: ["en"]
+          }
+        }
+      ]
+    };
+    axios
+      .post(
+        "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyB_tGSHmcxwM7WJrBJXSNzZCJH3pvJwk_U",
+        body
+      )
+      .then(response => {
+        try {
+          // console.log(response.data.responses[0]);
+          let temp = response.data.responses[0].fullTextAnnotation.text;
+          this.setState(
+            { speakingMessage: temp },
+            window.responsiveVoice.speak(temp, "US English Female", {
+              rate: 0.9
+            })
+          );
+          prevText[this.state.activeStep + 1] =
+            response.responses[0].description;
+          this.setState(
+            {
+              text: prevText
+            },
+            console.log(this.state.text)
+          );
+        } catch (e) {
+          // console.log(e);
+        }
+      });
+
+    this.setState({
+      text: prevText
+    });
   };
 
   render() {
@@ -89,7 +214,7 @@ export class Reader extends Component {
             nextButton={
               <Button
                 size="small"
-                onClick={this.handleNext}
+                onClick={this.handleNext.bind(this)}
                 disabled={activeStep === maxSteps - 1}
               >
                 Next
@@ -119,7 +244,10 @@ export class Reader extends Component {
         <Grid container wrap="nowrap" spacing={0}>
           <Grid item xs={4} md={4} lg={4}>
             <Link className={classes.noDeco} to="/">
-              <Button className={classes.buttonBottom}>
+              <Button
+                className={classes.buttonBottom}
+                onClick={() => window.responsiveVoice.pause()}
+              >
                 <Home className={classes.icon} />
               </Button>
             </Link>
@@ -130,11 +258,14 @@ export class Reader extends Component {
             </Button>
           </Grid>
           <Grid item xs={4} md={4} lg={4}>
-            <Button className={classes.buttonBottom} onClick={this.toggleMute}>
-              {this.state.mute ? (
-                <VolumeOff className={classes.icon} />
+            <Button
+              className={classes.buttonBottom}
+              onClick={this.toggleMute.bind(this)}
+            >
+              {!this.state.mute ? (
+                <Pause className={classes.icon} />
               ) : (
-                <VolumeUp className={classes.icon} />
+                <PlayArrow className={classes.icon} />
               )}
             </Button>
           </Grid>
