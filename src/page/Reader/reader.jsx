@@ -39,8 +39,9 @@ export class Reader extends Component {
     mute: false,
     speakingMessage: "",
     text: ["", "", "", "", ""],
-    ran:false,
+    ran: false,
     paused: false,
+    voice: false
   };
 
   handleNext = () => {
@@ -124,81 +125,100 @@ export class Reader extends Component {
     this.setState((prevState, props) => ({
       mute: prevState.mute ? false : true
     }));
-    if(!this.state.paused){
-    //if (window.responsiveVoice.isPlaying()) {
+    if (!this.state.paused) {
+      //if (window.responsiveVoice.isPlaying()) {
       console.log("PAUSE");
       this.setState({
-        paused: true,
-      })
+        paused: true
+      });
       window.responsiveVoice.pause();
     } else {
       console.log("RESUME");
       this.setState({
-        paused: false,
-      })
+        paused: false
+      });
       window.responsiveVoice.resume();
     }
   };
 
+  handleMic = () => {
+    if (this.props.listening) {
+      this.props.resetTranscript();
+      this.props.abortListening();
+      this.props.stopListening();
+      this.setState((prevState, props) => ({
+        voice: prevState.voice ? false : true
+      }));
+    } else {
+      this.props.resetTranscript();
+      this.props.startListening();
+      this.setState((prevState, props) => ({
+        voice: prevState.voice ? false : true
+      }));
+    }
+  };
+
   componentDidMount = () => {
+    this.props.resetTranscript();
+    this.props.abortListening();
     console.log("Entered COmponent will Mount");
-    if(!this.state.ran){
-    let prevText = this.state.text;
-    let body = {
-      requests: [
-        {
-          image: {
-            source: {
-              imageUri:
-                "https://raw.githubusercontent.com/aviquez96/EagleReader/master/src/books/grinch/imgs/1.jpg" //image URL
-            }
-          },
-          features: [
-            {
-              type: "TEXT_DETECTION",
-              maxResults: 1
-            }
-          ],
-          imageContext: {
-            languageHints: ["en"]
-          }
-        }
-      ]
-    };
-
-    axios
-      .post(
-        "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyB_tGSHmcxwM7WJrBJXSNzZCJH3pvJwk_U",
-        body
-      )
-      .then(response => {
-        try {
-          // console.log(response.data.responses[0]);
-          let temp = response.data.responses[0].fullTextAnnotation.text;
-          this.setState(
-            { speakingMessage: temp },
-            window.responsiveVoice.speak(temp, "US English Female", {
-              rate: 0.9
-            })
-          );
-          prevText[this.state.activeStep + 1] =
-            response.responses[0].description;
-          this.setState(
-            {
-              text: prevText,
-              ran: true
+    if (!this.state.ran) {
+      let prevText = this.state.text;
+      let body = {
+        requests: [
+          {
+            image: {
+              source: {
+                imageUri:
+                  "https://raw.githubusercontent.com/aviquez96/EagleReader/master/src/books/grinch/imgs/1.jpg" //image URL
+              }
             },
-            console.log(this.state.text)
-          );
-        } catch (e) {
-          // console.log(e);
-        }
-      });
+            features: [
+              {
+                type: "TEXT_DETECTION",
+                maxResults: 1
+              }
+            ],
+            imageContext: {
+              languageHints: ["en"]
+            }
+          }
+        ]
+      };
 
-    this.setState({
-      text: prevText
-    });
-  }
+      axios
+        .post(
+          "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyB_tGSHmcxwM7WJrBJXSNzZCJH3pvJwk_U",
+          body
+        )
+        .then(response => {
+          try {
+            // console.log(response.data.responses[0]);
+            let temp = response.data.responses[0].fullTextAnnotation.text;
+            this.setState(
+              { speakingMessage: temp },
+              window.responsiveVoice.speak(temp, "US English Female", {
+                rate: 0.9
+              })
+            );
+            prevText[this.state.activeStep + 1] =
+              response.responses[0].description;
+            this.setState(
+              {
+                text: prevText,
+                ran: true
+              },
+              console.log(this.state.text)
+            );
+          } catch (e) {
+            // console.log(e);
+          }
+        });
+
+      this.setState({
+        text: prevText
+      });
+    }
   };
 
   render() {
@@ -215,7 +235,7 @@ export class Reader extends Component {
     let myRedirect = transcript.includes("home") ? (
       <Redirect to="/" />
     ) : (
-      <Redirect to="/bookSelection" />
+      <div></div>
     );
 
     return (
@@ -291,11 +311,25 @@ export class Reader extends Component {
               </Button>
             </Link>
           </Grid>
+
           <Grid item xs={4} md={4} lg={4}>
-            <Button className={classes.settingsVoice}>
-              <SettingsVoice className={classes.icon} />
-            </Button>
+            {!this.state.voice ? (
+              <Button
+                className={classes.settingsVoiceOff}
+                onClick={this.handleMic}
+              >
+                <SettingsVoice className={classes.icon} />
+              </Button>
+            ) : (
+              <Button
+                className={classes.settingsVoiceOn}
+                onClick={this.handleMic}
+              >
+                <SettingsVoice className={classes.icon} />
+              </Button>
+            )}
           </Grid>
+
           <Grid item xs={4} md={4} lg={4}>
             {!this.state.mute ? (
               <Button
