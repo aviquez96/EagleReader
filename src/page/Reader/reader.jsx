@@ -245,7 +245,7 @@ export class Reader extends Component {
           <Grid item xs={4} md={4} lg={4}>
             <Link className={classes.noDeco} to="/">
               <Button
-                className={classes.buttonBottom}
+                className={classes.homeButton}
                 onClick={() => window.responsiveVoice.pause()}
               >
                 <Home className={classes.icon} />
@@ -253,22 +253,27 @@ export class Reader extends Component {
             </Link>
           </Grid>
           <Grid item xs={4} md={4} lg={4}>
-            <Button className={classes.buttonBottom}>
+            <Button className={classes.settingsVoice}>
               <SettingsVoice className={classes.icon} />
             </Button>
           </Grid>
           <Grid item xs={4} md={4} lg={4}>
-            <Button
-              className={classes.buttonBottom}
-              onClick={this.toggleMute.bind(this)}
-            >
-              {!this.state.mute ? (
-                <Pause className={classes.icon} />
-              ) : (
-                <PlayArrow className={classes.icon} />
-              )}
-            </Button>
-          </Grid>
+                {!this.state.mute ? (
+                  <Button
+                    className={classes.soundButtonOn}
+                    onClick={this.toggleMute}
+                  >
+                    <Pause className={classes.icon} />
+                  </Button>
+                ) : (
+                  <Button
+                    className={classes.soundButtonOff}
+                    onClick={this.toggleMute}
+                  >
+                    <PlayArrow className={classes.icon} />
+                  </Button>
+                )}
+              </Grid>
         </Grid>
       </div>
     );

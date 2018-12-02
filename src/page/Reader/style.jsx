@@ -33,6 +33,42 @@ const styles = theme => ({
     height: "30vh",
     width: "100%"
   },
+  homeButton: {
+    width: "100%",
+    height: "30vh",
+    background: "rgba(211,211,211,0.6)",
+    borderRadius: 0,
+    "&:hover": {
+      backgroundColor: "rgb(211,211,211)"
+    }
+  },
+  settingsVoice: {
+    width: "100%",
+    height: "30vh",
+    background: "rgba(140, 205, 255, 0.6)",
+    borderRadius: 0,
+    "&:hover": {
+      backgroundColor: "rgb(140, 205, 255)"
+    }
+  },
+  soundButtonOff: {
+    width: "100%",
+    height: "30vh",
+    background: "rgba(255, 40, 77, 0.6)",
+    borderRadius: 0,
+    "&:hover": {
+      backgroundColor: "rgb(255, 40, 77)"
+    }
+  },
+  soundButtonOn: {
+    width: "100%",
+    height: "30vh",
+    background: "rgba(0, 255, 140, 0.6)",
+    borderRadius: 0,
+    "&:hover": {
+      backgroundColor: "rgb(0, 255, 140)"
+    }
+  },
   noDeco: { textDecoration: "none", color: "white" },
   icon: {
     margin: theme.spacing.unit,
