@@ -23,7 +23,8 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 class bookSelection extends Component {
   state = {
-    activeStep: 0
+    activeStep: 0,
+    playSpeech: true,
   };
 
   handleNext = () => {
@@ -40,14 +41,33 @@ class bookSelection extends Component {
 
   handleStepChange = activeStep => {
     this.setState({ activeStep });
-    window.responsiveVoice.speak(book[activeStep].label, "US English Female");
+    if(this.state.playSpeech){
+      window.responsiveVoice.speak(book[activeStep].label, "US English Female");
+    }
+
   };
 
+  toggleMute = () => {
+
+    if(this.state.playSpeech) {
+      console.log("should stop speech");
+      this.setState({ playSpeech: false });
+      window.responsiveVoice.cancel();
+    }
+    else {
+      console.log("Should resume speech");
+      this.setState({ playSpeech: true });
+        window.responsiveVoice.speak(book[this.state.activeStep].label, "US English Female");
+    }
+  }
+
   componentDidMount = () => {
+    if(this.state.playSpeech){
     window.responsiveVoice.speak(
       book[this.state.activeStep].label,
       "US English Female"
     );
+  }
   };
 
   render() {
