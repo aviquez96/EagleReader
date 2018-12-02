@@ -29,7 +29,9 @@ export class Reader extends Component {
     activeStep: 0,
     mute: false,
     speakingMessage: "",
-    text: ["", "", "", "", ""]
+    text: ["", "", "", "", ""],
+    ran:false,
+    paused: false,
   };
 
   handleNext = () => {
@@ -109,17 +111,29 @@ export class Reader extends Component {
   };
 
   toggleMute = () => {
+    console.log("entered Toggle Mute");
     this.setState((prevState, props) => ({
       mute: prevState.mute ? false : true
     }));
-    if (window.responsiveVoice.isPlaying()) {
+    if(!this.state.paused){
+    //if (window.responsiveVoice.isPlaying()) {
+      console.log("PAUSE");
+      this.setState({
+        paused: true,
+      })
       window.responsiveVoice.pause();
     } else {
+      console.log("RESUME");
+      this.setState({
+        paused: false,
+      })
       window.responsiveVoice.resume();
     }
   };
 
   componentDidMount = () => {
+    console.log("Entered COmponent will Mount");
+    if(!this.state.ran){
     let prevText = this.state.text;
     let body = {
       requests: [
@@ -142,6 +156,7 @@ export class Reader extends Component {
         }
       ]
     };
+
     axios
       .post(
         "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyB_tGSHmcxwM7WJrBJXSNzZCJH3pvJwk_U",
@@ -161,7 +176,8 @@ export class Reader extends Component {
             response.responses[0].description;
           this.setState(
             {
-              text: prevText
+              text: prevText,
+              ran: true
             },
             console.log(this.state.text)
           );
@@ -173,6 +189,7 @@ export class Reader extends Component {
     this.setState({
       text: prevText
     });
+  }
   };
 
   render() {
