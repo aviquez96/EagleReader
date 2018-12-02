@@ -40,6 +40,14 @@ class bookSelection extends Component {
 
   handleStepChange = activeStep => {
     this.setState({ activeStep });
+    window.responsiveVoice.speak(book[activeStep].label, "US English Female");
+  };
+
+  componentDidMount = () => {
+    window.responsiveVoice.speak(
+      book[this.state.activeStep].label,
+      "US English Female"
+    );
   };
 
   render() {
@@ -53,6 +61,7 @@ class bookSelection extends Component {
           <Typography>{book[activeStep].label}</Typography>
         </Paper>
         <AutoPlaySwipeableViews
+          duration={4500}
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={activeStep}
           onChangeIndex={this.handleStepChange}
@@ -60,14 +69,14 @@ class bookSelection extends Component {
         >
           {book.map((step, index) => (
             <div key={step.label}>
-            <Link className={classes.noDeco} to="/reader">
-              {Math.abs(activeStep - index) <= 2 ? (
-                <img
-                  className={classes.img}
-                  src={step.imgPath}
-                  alt={step.label}
-                />
-              ) : null}
+              <Link className={classes.noDeco} to="/reader">
+                {Math.abs(activeStep - index) <= 2 ? (
+                  <img
+                    className={classes.img}
+                    src={step.imgPath}
+                    alt={step.label}
+                  />
+                ) : null}
               </Link>
             </div>
           ))}
@@ -133,12 +142,11 @@ class bookSelection extends Component {
       </div>
     );
   }
-  }
+}
 
-  bookSelection.propTypes = {
+bookSelection.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
-  };
-
+};
 
 export default withStyles(style, { withTheme: true })(bookSelection);
