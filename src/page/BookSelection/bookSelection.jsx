@@ -84,6 +84,7 @@ class bookSelection extends Component {
     this.props.resetTranscript();
     this.props.abortListening();
     if (this.state.playSpeech) {
+      console.log("START SPEAKUNG");
       window.responsiveVoice.speak(
         book[this.state.activeStep].label,
         "US English Female"
