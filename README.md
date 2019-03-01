@@ -1,6 +1,14 @@
 # EagleReader
 Local Hack Day 2018 Project. EagleReader is a web-based readeing application meant for people with visual and auditive disabilities. This project is done using React and Google Speech-to-text recognition.
 
+## Presentational Images
+The following section will present some images of the application running
+
+##### Main Page
+![](Images/EagleReader1.png)
+##### Book Reader
+![](Images/EagleReader2.png)
+
 ## Getting Started
 To install the application in your local machine, follow the next steps.
 
